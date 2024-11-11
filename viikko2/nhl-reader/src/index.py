@@ -9,12 +9,6 @@ def main():
 
     for player in players:
         print(player)
-    
-    
-    all_players = stats.top_scorers_by_nationality()
-
-    for player in all_players:
-        print(player)
 
 if __name__ == "__main__":
     main()

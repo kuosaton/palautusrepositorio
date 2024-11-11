@@ -46,5 +46,6 @@ class PlayerStats:
                 for player in sorted(country_players, key=lambda player: player.total, reverse=True):
                     result.append(player)
 
-        result.append("")
+                result.append("")
+
         return result
