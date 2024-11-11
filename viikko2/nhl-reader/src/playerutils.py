@@ -26,26 +26,11 @@ class PlayerStats:
     def __init__(self, players_dict):
         self.players_dict = players_dict
 
-    def top_scorers_by_nationality(self, country=None):
-        # If a country is not given, this function returns all players grouped by nationality
-
+    def top_scorers_by_nationality(self, country):
         result = []
+        country_players = self.players_dict[country]
 
-        if country is not None:
-            country_players = self.players_dict[country]
-            result.append(f"Players from {country} \n")
-
-            for player in sorted(country_players, key=lambda player: player.total, reverse=True):
-                result.append(player)
+        for player in sorted(country_players, key=lambda player: player.total, reverse=True):
+            result.append([player.name, player.team, player.goals, player.assists, player.total])
         
-        else:
-            for country in self.players_dict.keys():
-                result.append(f"Players from {country} \n")
-                country_players = self.players_dict[country]
-
-                for player in sorted(country_players, key=lambda player: player.total, reverse=True):
-                    result.append(player)
-
-                result.append("")
-
         return result
