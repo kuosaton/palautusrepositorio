@@ -47,7 +47,41 @@ Register With Username That Is Already In Use
     Submit Credentials
     Register Should Fail With Message  Given username already exists
 
+Login After Successful Registration
+    Set Username  marneuscalgar
+    Set Password  ihatetyranids1
+    Set Password Confirmation  ihatetyranids1
+    Submit Credentials
+    Register Should Succeed
+    Go To Main Page
+    Click Button  Logout
+
+    Set Username  marneuscalgar
+    Set Password  ihatetyranids1
+    Click Button  Login
+    Login Should Succeed
+
+Login After Failed Registration
+    Set Username  heretic
+    Set Password  ilikechaos
+    Set Password Confirmation  ilikechaos
+    Submit Credentials
+    Register Should Fail With Message  Password must contain both letters (a-z) and numbers (0-9)
+    Go To Login Page
+    Set Username  heretic
+    Set Password  ilikechaos
+    Click Button  Login
+    Login Should Fail With Message  Invalid username or password
+
 *** Keywords ***
+
+Login Should Succeed
+    Main Page Should Be Open
+
+Login Should Fail With Message
+    [Arguments]  ${message}
+    Login Page Should Be Open
+    Page Should Contain  ${message}
 
 Register Should Succeed
     Welcome Page Should Be Open
