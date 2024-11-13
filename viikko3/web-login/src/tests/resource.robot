@@ -26,12 +26,20 @@ Open And Configure Browser
     END
     Open Browser  browser=${BROWSER}  options=${options}
 
+Go To Starting Page
+    Go To  ${HOME_URL}
+
+Go To Login Page
+    Go To  ${LOGIN_URL}
+
+Go To Register Page
+    Go To  ${REGISTER_URL}
+
 Login Page Should Be Open
     Title Should Be  Login
 
 Main Page Should Be Open
     Title Should Be  Ohtu Application main page
 
-Go To Login Page
-    Go To  ${LOGIN_URL}
-
+Register Page Should Be Open
+    Title Should Be  Register
