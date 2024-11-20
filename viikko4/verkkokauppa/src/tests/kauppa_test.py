@@ -242,6 +242,7 @@ class TestKauppa(unittest.TestCase):
 
     def test_kauppa_pyytää_uuden_viitenumeron_jokaiselle_maksutapahtumalle(self):
         pankki_mock = Mock()
+        # Alustetaan nyt toimiva viitegeneraattori
         viitegeneraattori_mock = Mock(wraps=Viitegeneraattori())
 
         # palautetaan aina arvo 42
@@ -274,11 +275,11 @@ class TestKauppa(unittest.TestCase):
         kauppa.lisaa_koriin(1)
         kauppa.tilimaksu("pekka", "12345")
 
-        # varmistetaan, että metodia tilisiirto on kutsuttu arvoilla
-        # ostoskorin hinta on juuston hinta eli 6 eikä maidon hinta eli 5, koska ostoskori nollattiin
+        # varmistetaan, että metodia tilisiirto on kutsuttu arvoilla, missä viite on oikeanlainen eli 2
         pankki_mock.tilisiirto.assert_called_with("pekka", 2, "12345", kauppa._kaupan_tili, 5)
 
         kauppa.lisaa_koriin(1)
         kauppa.tilimaksu("pekka", "12345")
 
+        # nyt viitteen pitäisi olla yhden suurempi eli 3
         pankki_mock.tilisiirto.assert_called_with("pekka", 3, "12345", kauppa._kaupan_tili, 10)
