@@ -35,7 +35,7 @@ class TennisGame:
         return self.player1.score - self.player2.score
 
     def get_score_calls_under_forty(self):
-        """When both players have a score under forty, this function is used to get score calls."""
+        """When neither player has a score of forty or more, this function is used to get score calls."""
         score = ""
 
         if self.check_score_is_even() == False:
@@ -65,7 +65,7 @@ class TennisGame:
         return score
 
     def get_score_calls_forty_or_more(self):
-        """When both players have a score of forty or more, this function is used to get score calls."""
+        """When at least one player has a score of forty or more, this function is used to get score calls."""
         score = ""
 
         score_difference = self.calculate_score_difference()
