@@ -44,7 +44,6 @@ class TennisGame:
                 1: "Fifteen",
                 2: "Thirty",
                 3: "Forty",
-                4: "Game",
             }
 
             player1_score_call = score_call_mapping[self.player1.score]
