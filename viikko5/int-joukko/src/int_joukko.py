@@ -5,38 +5,38 @@ class IntJoukko:
     def __init__(self, kapasiteetti=5, kasvatuskoko=5):
         if kapasiteetti != 5:
             if not isinstance(kapasiteetti, int) or kapasiteetti < 0:
-                raise Exception("Virheellinen kapasiteetti")
+                raise Exception("Virheellinen kapasiteettisyöte")
         self.kapasiteetti = kapasiteetti
 
         if kasvatuskoko != 5:
             if not isinstance(kapasiteetti, int) or kapasiteetti < 0:
-                raise Exception("Virheellinen kasvatuskoko")
+                raise Exception("Virheellinen kasvatuskokosyöte")
         self.kasvatuskoko = kasvatuskoko
 
-        self.ljono = self._luo_lista(self.kapasiteetti)
+        self.lista = self._luo_lista(self.kapasiteetti)
         self.alkioiden_lkm = 0
 
     def mahtavuus(self):
         return self.alkioiden_lkm
 
     def kuuluu(self, n):
-        return n in self.ljono
+        return n in self.lista
 
     def lista_taynna(self):
-        return self.alkioiden_lkm == len(self.ljono)
+        return self.alkioiden_lkm == len(self.lista)
 
     def _laajenna_listaa(self):
         for _ in range(self.kasvatuskoko):
-            self.ljono.append(0)
+            self.lista.append(0)
 
     def lisaa(self, n):
         if self.alkioiden_lkm == 0:
-            self.ljono[0] = n
+            self.lista[0] = n
             self.alkioiden_lkm += 1
             return True
 
         if not self.kuuluu(n):
-            self.ljono[self.alkioiden_lkm] = n
+            self.lista[self.alkioiden_lkm] = n
             self.alkioiden_lkm += 1
 
             if self.lista_taynna():
@@ -48,21 +48,20 @@ class IntJoukko:
 
     def poista(self, n):
         if self.kuuluu(n):
-            self.ljono.remove(n)
-            self.ljono.append(0)
+            self.lista.remove(n)
+            self.lista.append(0)
             self.alkioiden_lkm -= 1
             return True
 
         return False
 
     def kopioi_lista(self, alkuperainen, kopio):
-        for i in range(0, len(alkuperainen)):
-            kopio[i] = alkuperainen[i]
+        kopio = alkuperainen.copy()
 
     def to_int_list(self):
         taulu = self._luo_lista(self.alkioiden_lkm)
         for i in range(0, len(taulu)):
-            taulu[i] = self.ljono[i]
+            taulu[i] = self.lista[i]
 
         return taulu
 
@@ -87,9 +86,8 @@ class IntJoukko:
         b_taulu = b.to_int_list()
 
         for i in range(0, len(a_taulu)):
-            for j in range(0, len(b_taulu)):
-                if a_taulu[i] == b_taulu[j]:
-                    leikkausjoukko.lisaa(b_taulu[j])
+            if a_taulu[i] in b_taulu:
+                leikkausjoukko.lisaa(a_taulu[i])
 
         return leikkausjoukko
 
@@ -100,23 +98,20 @@ class IntJoukko:
         b_taulu = b.to_int_list()
 
         for i in range(0, len(a_taulu)):
-            erotusjoukko.lisaa(a_taulu[i])
-
-        for i in range(0, len(b_taulu)):
-            erotusjoukko.poista(b_taulu[i])
+            if a_taulu[i] not in b_taulu:
+                erotusjoukko.lisaa(a_taulu[i])
 
         return erotusjoukko
 
     def __str__(self):
         if self.alkioiden_lkm == 0:
-            return "{}"
+            merkkijonoesitys = ""
         elif self.alkioiden_lkm == 1:
-            return "{" + str(self.ljono[0]) + "}"
+            merkkijonoesitys = str(self.lista[0])
         else:
-            tuotos = "{"
+            merkkijonoesitys = ""
             for i in range(0, self.alkioiden_lkm - 1):
-                tuotos += str(self.ljono[i])
-                tuotos += ", "
-            tuotos += str(self.ljono[self.alkioiden_lkm - 1])
-            tuotos += "}"
-            return tuotos
+                merkkijonoesitys += str(self.lista[i]) + ", "
+            merkkijonoesitys += str(self.lista[self.alkioiden_lkm - 1])
+
+        return "{" + merkkijonoesitys + "}"
