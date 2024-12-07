@@ -20,6 +20,10 @@ class QueryBuilder:
         self._matchers.append(HasFewerThan(value, attr))
         return self
 
+    def one_of(self, *matchers):
+        self._matchers.append(Or(*matchers))
+        return self
+
     def build(self):
         if not self._matchers:
             return All()
