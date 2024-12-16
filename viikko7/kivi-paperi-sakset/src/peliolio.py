@@ -21,7 +21,7 @@ class Yksinpeli:
 
 class HaastavaYksinpeli:
     def __init__(self):
-        self._peli = KPSParempiTekoaly
+        self._peli = KPSParempiTekoaly()
 
     def pelaa(self):
         self._peli.pelaa()
